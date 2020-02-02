@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>
+    Portfolio Management
+  </title>
+  <!-- Favicon -->
+  <link href="{% static 'assets/img/brand/favicon.png' %}" rel="icon" type="image/png">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+  <!-- Icons -->
+  <link href="{% static 'assets/js/plugins/nucleo/css/nucleo.css' %}" rel="stylesheet" />
+  <link href="{% static 'assets/js/plugins/@fortawesome/fontawesome-free/css/all.min.css' %}" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link href="{% static 'assets/css/argon-dashboard.css' %}" rel="stylesheet" />
+
+  <link href="{% static 'assets/css/fullcalendar.css' %}" rel='stylesheet' />
+  <link href="{% static 'assets/css/fullcalendar.print.css' %}" rel='stylesheet' media='print' />
+  <script src="{% static 'assets/js/jquery-1.10.2.js' %}"  type="text/javascript"></script>
+  <script src="{% static 'assets/js/jquery-ui.custom.min.js' %}" type="text/javascript"></script>
+  <script src="{% static 'assets/js/fullcalendar.js' %}" type="text/javascript"></script>
+  <script>
+    $(document).ready(function() {
+        var date = new Date();
+        var d = date.getDate();
+        var m = date.getMonth();
+        var y = date.getFullYear();
+
+        /*  className colors
+
+        className: default(transparent), important(red), chill(pink), success(green), info(blue)
+
+        */
+
+
+        /* initialize the external events
+        -----------------------------------------------------------------*/
+
+        $('#external-events div.external-event').each(function() {
+
+            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+            // it doesn't need to have a start or end
+            var eventObject = {
+                title: $.trim($(this).text()) // use the element's text as the event title
+            };
+
+            // store the Event Object in the DOM element so we can get to it later
+            $(this).data('eventObject', eventObject);
+
+            // make the event draggable using jQuery UI
+            $(this).draggable({
+                zIndex: 999,
+                revert: true,      // will cause the event to go back to its
+                revertDuration: 0  //  original position after the drag
+            });
+
+        });
+
+
+        /* initialize the calendar
+        -----------------------------------------------------------------*/
+
+        var calendar =  $('#calendar').fullCalendar({
+            header: {
+                left: 'title',
+                center: 'agendaDay,agendaWeek,month',
+                right: 'prev,next today'
+            },
+            editable: true,
+            firstDay: 1, //  1(Monday) this can be changed to 0(Sunday) for the USA system
+            selectable: true,
+            defaultView: 'month',
+
+            axisFormat: 'h:mm',
+            columnFormat: {
+                month: 'ddd',    // Mon
+                week: 'ddd d', // Mon 7
+                day: 'dddd M/d',  // Monday 9/7
+                agendaDay: 'dddd d'
+            },
+            titleFormat: {
+                month: 'MMMM yyyy', // September 2009
+                week: "MMMM yyyy", // September 2009
+                day: 'MMMM yyyy'                  // Tuesday, Sep 8, 2009
+            },
+            allDaySlot: false,
+            selectHelper: true,
+            select: function(start, end, allDay) {
+                var title = prompt('Event Title:');
+                if (title) {
+                    calendar.fullCalendar('renderEvent',
+                        {
+                            title: title,
+                            start: start,
+                            end: end,
+                            allDay: allDay
+                        },
+                        true // make the event "stick"
+                    );
+                }
+                calendar.fullCalendar('unselect');
+            },
+            droppable: true, // this allows things to be dropped onto the calendar !!!
+            drop: function(date, allDay) { // this function is called when something is dropped
+
+                // retrieve the dropped element's stored Event Object
+                var originalEventObject = $(this).data('eventObject');
+
+                // we need to copy it, so that multiple events don't have a reference to the same object
+                var copiedEventObject = $.extend({}, originalEventObject);
+
+                // assign it the date that was reported
+                copiedEventObject.start = date;
+                copiedEventObject.allDay = allDay;
+
+                // render the event on the calendar
+                // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+                $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+                // is the "remove after drop" checkbox checked?
+                if ($('#drop-remove').is(':checked')) {
+                    // if so, remove the element from the "Draggable Events" list
+                    $(this).remove();
+                }
+
+            },
+
+            events: [
+                {
+                    title: 'All Day Event',
+                    start: new Date(y, m, 1)
+                },
+                {
+                    id: 999,
+                    title: 'Repeating Event',
+                    start: new Date(y, m, d-3, 16, 0),
+                    allDay: false,
+                    className: 'info'
+                },
+                {
+                    id: 999,
+                    title: 'Repeating Event',
+                    start: new Date(y, m, d+4, 16, 0),
+                    allDay: false,
+                    className: 'info'
+                },
+                {
+                    title: 'Meeting',
+                    start: new Date(y, m, d, 10, 30),
+                    allDay: false,
+                    className: 'important'
+                },
+                {
+                    title: 'Lunch',
+                    start: new Date(y, m, d, 12, 0),
+                    end: new Date(y, m, d, 14, 0),
+                    allDay: false,
+                    className: 'important'
+                },
+                {
+                    title: 'Birthday Party',
+                    start: new Date(y, m, d+1, 19, 0),
+                    end: new Date(y, m, d+1, 22, 30),
+                    allDay: false,
+                },
+                {
+                    title: 'Click for Google',
+                    start: new Date(y, m, 28),
+                    end: new Date(y, m, 29),
+                    url: 'http://google.com/',
+                    className: 'success'
+                }
+            ],
+        });
+    });
+    </script>
+
+  <style>
+    #calendar_container {
+        margin-top: 40px;
+        text-align: center;
+        font-size: 14px;
+        font-family: "Helvetica Nueue",Arial,Verdana,sans-serif;
+        }
+
+    #wrap {
+        width: 1100px;
+        margin: 0 auto;
+        }
+
+    #external-events {
+        float: left;
+        width: 150px;
+        padding: 0 10px;
+        text-align: left;
+        }
+
+    #external-events h4 {
+        font-size: 16px;
+        margin-top: 0;
+        padding-top: 1em;
+        }
+
+    .external-event { /* try to mimick the look of a real event */
+        margin: 10px 0;
+        padding: 2px 4px;
+        background: #3366CC;
+        color: #fff;
+        font-size: .85em;
+        cursor: pointer;
+        }
+
+    #external-events p {
+        margin: 1.5em 0;
+        font-size: 11px;
+        color: #666;
+        }
+
+    #external-events p input {
+        margin: 0;
+        vertical-align: middle;
+        }
+
+    #calendar {
+        margin: 0 auto;
+        width: 95%;
+        background-color: #FFFFFF;
+        border-radius: 10px;
+        box-shadow: 0 1px 2px #C3C3C3;
+        }
+  </style>
+  <style> .plan_list{ height: 100px; } .plan_card{ height: 180px; } .card-title{ height: 50px !important; } </style>
+</head>
+
+<body class="">
+  <!-- Navigation -->
+  <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light bg-white" id="sidenav-main">
+    <div class="container-fluid">
+      <!-- Toggler -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <!-- Collapse -->
+      <div class="collapse navbar-collapse" id="sidenav-collapse-main">
+        <!-- Collapse header -->
+        <div class="navbar-collapse-header d-md-none">
+          <div class="row">
+            <div class="col-6 collapse-brand">
+              <a href="index.html">
+                <img src="{% static 'assets/img/brand/blue.png' %}">
+              </a>
+            </div>
+            <div class="col-6 collapse-close">
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#sidenav-collapse-main" aria-controls="sidenav-main" aria-expanded="false" aria-label="Toggle sidenav">
+                <span></span>
+                <span></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form class="mt-4 mb-3 d-md-none">
+          <div class="input-group input-group-rounded input-group-merge">
+            <input type="search" class="form-control form-control-rounded form-control-prepended" placeholder="Search" aria-label="Search">
+            <div class="input-group-prepend">
+              <div class="input-group-text">
+                <span class="fa fa-search"></span>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Navigation -->
+        
+        <!-- Heading -->
+        <h3 class="text-muted"> Portfolio / Plan </h3>
+
+        <!-- Divider -->
+        <hr class="my-3">
+
+        <ul class="navbar-nav">
+          <li class="nav-item  active ">
+            <a class="nav-link  active " href="{% url 'dashboard' %}">
+              <i class="ni ni-tv-2 text-primary"></i> 홈
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'schedule' %}">
+              <i class="ni ni-planet text-blue"></i> 플랜
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'create' %}">
+              <i class="ni ni-pin-3 text-orange"></i> 일정 및 계획
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'profile' %}">
+              <i class="ni ni-single-02 text-yellow"></i> 사용자
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="{% url 'list' %}">
+              <i class="ni ni-bullet-list-67 text-red"></i> 일정 리스트
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">
+              <i class="ni ni-key-25 text-info"></i> 로그인
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signup' %}">
+              <i class="ni ni-circle-08 text-pink"></i> 회원가입
+            </a>
+          </li>
+
+        </ul>
+
+        <!-- Divider -->
+        <hr class="my-3">
+        <!-- Heading -->
+        <h6 class="navbar-heading text-muted">참고 페이지</h6>
+        <!-- Navigation -->
+        <ul class="navbar-nav mb-md-3">
+
+          <li class="nav-item">
+            <a class="nav-link" href=""> <i class="ni ni-world-2"> </i> KOCW </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href=""> <i class="ni ni-world-2"> </i> Portal </a>
+          </li>
+          
+          <li class="nav-item">
+            <a class="nav-link" href=""> <i class="ni ni-world-2"> </i> sPortal </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href=""> <i class="ni ni-badge"> </i> edwith </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href=""> <i class="ni ni-badge"> </i> LikeLion </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href=""> <i class="ni ni-books"> </i> Library </a>
+          </li>
+
+        </ul>
+
+        <!-- Divider -->
+        <hr class="my-3">
+        <!-- Heading -->
+        <h6 class="navbar-heading text-muted">Documentation</h6>
+        <!-- Navigation -->
+        <ul class="navbar-nav mb-md-3">
+          <li class="nav-item">
+            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/getting-started/overview.html">
+              <i class="ni ni-spaceship"></i> Getting started
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/foundation/colors.html">
+              <i class="ni ni-palette"></i> Foundation
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="https://demos.creative-tim.com/argon-dashboard/docs/components/alerts.html">
+              <i class="ni ni-ui-04"></i> Components
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <!-- Navbar -->
+    <nav class="navbar navbar-top navbar-expand-md navbar-dark" id="navbar-main">
+      <div class="container-fluid">
+        <!-- Brand -->
+        <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href=" index.html">Home</a>
+        <!-- Form -->
+        <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+          <div class="form-group mb-0">
+            <div class="input-group input-group-alternative">
+              <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+              </div>
+              <input class="form-control" placeholder="Search" type="text">
+            </div>
+          </div>
+        </form>
+
+        {% if user.is_authenticated %}
+        <ul class="navbar-nav align-items-center d-none d-md-flex">
+          <li class="nav-item dropdown">
+            <a class="nav-link pr-0" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="media align-items-center">
+                <span class="avatar avatar-sm rounded-circle">
+                  <img alt="Image placeholder" src="{% static 'assets/img/theme/team-1-800x800.jpeg' %}">
+                </span>
+                <div class="media-body ml-2 d-none d-lg-block">
+                  <span class="mb-0 text-sm  font-weight-bold"> Khyst </span>
+                </div>
+              </div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-arrow dropdown-menu-right">
+              <div class=" dropdown-header noti-title">
+                <h6 class="text-overflow m-0">Welcome!</h6>
+              </div>
+              <a href="#" class="dropdown-item">
+                <i class="ni ni-single-02"></i>
+                <span>My profile</span>
+              </a>
+              <a href="#" class="dropdown-item">
+                <i class="ni ni-settings-gear-65"></i>
+                <span>Settings</span>
+              </a>
+              <a href="#" class="dropdown-item">
+                <i class="ni ni-calendar-grid-58"></i>
+                <span>Activity</span>
+              </a>
+              <a href="#" class="dropdown-item">
+                <i class="ni ni-support-16"></i>
+                <span>Support</span>
+              </a>
+              <div class="dropdown-divider"></div>
+
+              <form action="{% url 'logout' %}" method="POST">
+                {% csrf_token %}
+                <a href="javascript:;" onclick="parentNode.submit();" class="dropdown-item">
+                  <i class="ni ni-user-run"></i>
+                  <span>Logout</span>
+                </a>
+              </form>
+
+            </div>
+          </li>
+        </ul>
+        {% else %}
+        <a class="nav-item nav-link" style="color:white" href="{% url 'signup' %}">Signup</a>
+        <a class="nav-item nav-link" style="color:white" href="{% url 'login' %}">Login</a>
+        {% endif %}
+
+      </div>
+    </nav>
+    <!-- End Navbar -->
+
+    <!-- Header -->
+    <div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+        <div class="container-fluid">
+        <!-- 
+            8개 과목 Paginator 생성 (X)
+        -->
+            <div class="header-body">
+            <!-- Card stats -->
+            <div class="row">
+
+            <!-- One Card -->
+                <div class="col-xl-3 col-lg-6 plan_card">
+                <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">Python Dev</h5>
+                        <span class="h2 font-weight-bold mb-0">350,897</span>
+                        </div>
+                        <div class="col-auto">
+                        <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        </div>
+                    </div>
+                    <p class="mt-3 mb-0 text-muted text-sm">
+                        <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                        <span class="text-nowrap">Since last month</span>
+                    </p>
+                    </div>
+                </div>
+                </div>
+
+            <!-- One Card -->
+                <div class="col-xl-3 col-lg-6 plan_card">
+                <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">Artificial Inteligence(AI) Dev </h5>
+                        <span class="h2 font-weight-bold mb-0">2,356</span>
+                        </div>
+                        <div class="col-auto">
+                        <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                        </div>
+                    </div>
+                    <p class="mt-3 mb-0 text-muted text-sm">
+                        <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span>
+                        <span class="text-nowrap">Since last week</span>
+                    </p>
+                    </div>
+                </div>
+                </div>
+
+            <!-- One Card -->
+                <div class="col-xl-3 col-lg-6 plan_card">
+                <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">Computer License</h5>
+                        <span class="h2 font-weight-bold mb-0">924</span>
+                        </div>
+                        <div class="col-auto">
+                        <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        </div>
+                    </div>
+                    <p class="mt-3 mb-0 text-muted text-sm">
+                        <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
+                        <span class="text-nowrap">Since yesterday</span>
+                    </p>
+                    </div>
+                </div>
+                </div>
+
+            <!-- One Card -->
+                <div class="col-xl-3 col-lg-6 plan_card">
+                <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0">Blog(tistory)</h5>
+                        <span class="h2 font-weight-bold mb-0">49,65%</span>
+                        </div>
+                        <div class="col-auto">
+                        <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                            <i class="fas fa-percent"></i>
+                        </div>
+                        </div>
+                    </div>
+                    <p class="mt-3 mb-0 text-muted text-sm">
+                        <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
+                        <span class="text-nowrap">Since last month</span>
+                    </p>
+                    </div>
+                </div>
+                </div>
+
+            {% for sub in subject %}
+            <!-- One Card -->
+                <div class="col-xl-3 col-lg-6 plan_card">
+                <div class="card card-stats mb-4 mb-xl-0">
+                    <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                        <h5 class="card-title text-uppercase text-muted mb-0"> {{ sub.title }} </h5>
+                        <span class="h2 font-weight-bold mb-0"> {{ sub.processed }}% </span>
+                        </div>
+                        <div class="col-auto">
+                        <div class="icon icon-shape bg-success text-white rounded-circle shadow">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        </div>
+                    </div>
+                    <p class="mt-3 mb-0 text-muted text-sm">
+                        <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> {{ sub.processed }}% </span>
+                        <span class="text-nowrap">Since {{ sub.last_study }} </span>
+                    </p>
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+
+            </div>
+            </div>
+        </div>
+    </div> 
+    
+    <!-- Calendar -->
+    <div id="calendar_container">
+        <div id='calendar'></div>
+        <div style='clear:both'></div>  
+    </div>
+
+    <div class="container-fluid">
+
+
+    <!-- Footer -->
+      <footer class="footer">
+        <div class="row align-items-center justify-content-xl-between">
+          <div class="col-xl-2">
+            <div class="copyright text-center text-xl-left text-muted">
+              &copy; 2018 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a><br>
+              &copy; 2020 <a href="http://khyst.co.kr" class="font-weight-bold ml-1" target="_blank"> Khyst </a>
+            </div>
+          </div>
+
+          <div class="col-xl-4">
+            <div class="nav nav-footer justify-content-center justify-content-xl-end">
+              This is made for managing Portfolio & Plan
+            </div>
+          </div>
+
+          <div class="col-xl-6">
+            <ul class="nav nav-footer justify-content-center justify-content-xl-end">
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Thanks for ♥ Creative Tim</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+              </li>
+              <li class="nav-item">
+                <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </footer>
+  </div>
+
+  <!--   Core   -->
+  {% comment %} <script src="{% static 'assets/js/plugins/jquery/dist/jquery.min.js' %}"></script> {% endcomment %}
+  <script src="{% static 'assets/js/plugins/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+  <!--   Optional JS   -->
+  <script src="{% static 'assets/js/plugins/chart.js/dist/Chart.min.js' %}"></script>
+  <script src="{% static 'assets/js/plugins/chart.js/dist/Chart.extension.js' %}"></script>
+  <!--   Argon JS   -->
+  <script src="{% static 'assets/js/argon-dashboard.min.js' %}"></script>
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+
+  <script>
+    window.TrackJS &&
+      TrackJS.install({
+        token: "ee6fab19c5a04ac1a32a645abde4613a",
+        application: "argon-dashboard-free"
+      });
+  </script>
+
+</body>
+
+</html>
+
+

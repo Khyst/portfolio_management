@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block content %}
+
+<!-- Header -->
+<div class="header bg-gradient-primary pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+    <!-- 
+        8개 과목 Paginator 생성 (X)
+    -->
+        <div class="header-body">
+        <!-- Card stats -->
+        <div class="row">
+
+        <!-- One Card -->
+            <div class="col-xl-3 col-lg-6 plan_card">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Python Dev</h5>
+                    <span class="h2 font-weight-bold mb-0">350,897</span>
+                    </div>
+                    <div class="col-auto">
+                    <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    </div>
+                </div>
+                <p class="mt-3 mb-0 text-muted text-sm">
+                    <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> 3.48%</span>
+                    <span class="text-nowrap">Since last month</span>
+                </p>
+                </div>
+            </div>
+            </div>
+
+        <!-- One Card -->
+            <div class="col-xl-3 col-lg-6 plan_card">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Artificial Inteligence(AI) Dev </h5>
+                    <span class="h2 font-weight-bold mb-0">2,356</span>
+                    </div>
+                    <div class="col-auto">
+                    <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    </div>
+                </div>
+                <p class="mt-3 mb-0 text-muted text-sm">
+                    <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> 3.48%</span>
+                    <span class="text-nowrap">Since last week</span>
+                </p>
+                </div>
+            </div>
+            </div>
+
+        <!-- One Card -->
+            <div class="col-xl-3 col-lg-6 plan_card">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Computer License</h5>
+                    <span class="h2 font-weight-bold mb-0">924</span>
+                    </div>
+                    <div class="col-auto">
+                    <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    </div>
+                </div>
+                <p class="mt-3 mb-0 text-muted text-sm">
+                    <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> 1.10%</span>
+                    <span class="text-nowrap">Since yesterday</span>
+                </p>
+                </div>
+            </div>
+            </div>
+
+        <!-- One Card -->
+            <div class="col-xl-3 col-lg-6 plan_card">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0">Blog(tistory)</h5>
+                    <span class="h2 font-weight-bold mb-0">49,65%</span>
+                    </div>
+                    <div class="col-auto">
+                    <div class="icon icon-shape bg-info text-white rounded-circle shadow">
+                        <i class="fas fa-percent"></i>
+                    </div>
+                    </div>
+                </div>
+                <p class="mt-3 mb-0 text-muted text-sm">
+                    <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> 12%</span>
+                    <span class="text-nowrap">Since last month</span>
+                </p>
+                </div>
+            </div>
+            </div>
+
+        {% for sub in subject %}
+        <!-- One Card -->
+            <div class="col-xl-3 col-lg-6 plan_card">
+            <div class="card card-stats mb-4 mb-xl-0">
+                <div class="card-body">
+                <div class="row">
+                    <div class="col">
+                    <h5 class="card-title text-uppercase text-muted mb-0"> {{ sub.title }} </h5>
+                    <span class="h2 font-weight-bold mb-0"> {{ sub.processed }}% </span>
+                    </div>
+                    <div class="col-auto">
+                    <div class="icon icon-shape bg-success text-white rounded-circle shadow">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    </div>
+                </div>
+                <p class="mt-3 mb-0 text-muted text-sm">
+                    <span class="text-success mr-2"><i class="fas fa-arrow-up"></i> {{ sub.processed }}% </span>
+                    <span class="text-nowrap">Since {{ sub.last_study }} </span>
+                </p>
+                </div>
+            </div>
+            </div>
+        {% endfor %}
+
+        </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+            <div class="row">
+                <div class="col-md-10"> 
+                    <div class="card-header bg-transparent">
+                        <h3 class="mb-0"> 공부 기록/자료 추가하기 </h3>
+                        <h6 class="heading-small text-muted mb-4">Add to Study record/reference</h6>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="" >
+                <div class="pl-lg-4">
+                    <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                        <label class="form-control-label" for="input-address">제목</label>
+                        <input id="" class="form-control form-control-alternative" placeholder="" value="" type="text">
+                        </div>
+                    </div>
+                    </div>
+                    <hr class="my-4" />
+                    <div class="row">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                        <label class="form-control-label" for="input-city">링크1</label>
+                        <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="https://example.com" value="">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                        <label class="form-control-label" for="input-country">링크2</label>
+                        <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="https://example.com" value="">
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                        <label class="form-control-label" for="input-country">링크3</label>
+                        <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="https://example.com" value="">
+                        </div>
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                        <label class="form-control-label" for="input-country">첨부 파일</label>
+                        <input type="file" id="input-file" class="form-control-file">
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- <hr class="my-4" /> -->
+                <h6 class="heading-small text-muted mb-4"> </h6>
+                <div class="pl-lg-4">
+                    <div class="form-group">
+                    <textarea rows="16" class="form-control form-control-alternative" placeholder=""></textarea>
+                    </div>
+                </div>
+                <hr class="my-4" />
+                <!-- Description -->
+                <button class="btn btn-icon btn-2 btn-success" type="button">
+                    작성하기
+                    {% comment %} <span class="btn-inner--icon"><i class="ni ni-atom"></i></span> {% endcomment %}
+                </button>
+                <button class="btn btn-icon btn-2 btn-warning" type="button">
+                    임시저장
+                    {% comment %} <span class="btn-inner--icon"><i class="ni ni-atom"></i></span> {% endcomment %}
+                </button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</div>
