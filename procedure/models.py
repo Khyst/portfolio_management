@@ -1,30 +1,41 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 class Subject(models.Model):
 
     #author = models.OneToOneField(User, on_delete=models.CASCADE)
     #author은 User과 subject를 1:N 구조로 이어주는 Key
 
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default="") # User accout와 연결
     title = models.CharField(max_length=100)
     procedure = models.IntegerField()
-    this_week_proceed = models.IntegerField()
-    last_study = models.DateTimeField()
-    time = models.IntegerField()
+
+    # 초기에 Subject작성시 NULL인 상태로 생성
+    this_week_proceed = models.IntegerField(null=True)
+    last_study = models.DateTimeField(null=True)
+    time = models.IntegerField(null=True)
+
     category = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title
 
-class refPost(models.Model):
-    obj = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    #obj는 Subject과 refPost를 1:다 구조로 이어주는 Key
-    o_id = models.IntegerField(default=0)
+class Posting(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default="")
+    post_obj = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    #obj는 Subject과 Posting를 1:다 구조로 이어주는 Key
+
+    post_id = models.IntegerField(default=0)
+    post_title = models.CharField(default="", max_length=200)
+
     reference = models.TextField()
-    comment = models.TextField()
+    description = models.TextField()
+
     intro_image = models.ImageField()
 
     def __str__(self):
-        return self.title
+        return self.post_title
 
 class timeAmount(models.Model):
     totalWeeklyAmount = models.IntegerField()

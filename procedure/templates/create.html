@@ -14,12 +14,12 @@
 
         <!-- One Card -->
             <div class="col-xl-3 col-lg-6 plan_card">
-            <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card card-stats mb-4 mb-xl-0 plan_card_content">
                 <div class="card-body">
                 <div class="row">
                     <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">Python Dev</h5>
-                    <span class="h2 font-weight-bold mb-0">350,897</span>
+                    <span class="h2 font-weight-bold mb-0">%</span>
                     </div>
                     <div class="col-auto">
                     <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
@@ -37,12 +37,12 @@
 
         <!-- One Card -->
             <div class="col-xl-3 col-lg-6 plan_card">
-            <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card card-stats mb-4 mb-xl-0 plan_card_content">
                 <div class="card-body">
                 <div class="row">
                     <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">Artificial Inteligence(AI) Dev </h5>
-                    <span class="h2 font-weight-bold mb-0">2,356</span>
+                    <span class="h2 font-weight-bold mb-0">%</span>
                     </div>
                     <div class="col-auto">
                     <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -60,12 +60,12 @@
 
         <!-- One Card -->
             <div class="col-xl-3 col-lg-6 plan_card">
-            <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card card-stats mb-4 mb-xl-0 plan_card_content">
                 <div class="card-body">
                 <div class="row">
                     <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">Computer License</h5>
-                    <span class="h2 font-weight-bold mb-0">924</span>
+                    <span class="h2 font-weight-bold mb-0">%</span>
                     </div>
                     <div class="col-auto">
                     <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -83,12 +83,12 @@
 
         <!-- One Card -->
             <div class="col-xl-3 col-lg-6 plan_card">
-            <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card card-stats mb-4 mb-xl-0 plan_card_content">
                 <div class="card-body">
                 <div class="row">
                     <div class="col">
                     <h5 class="card-title text-uppercase text-muted mb-0">Blog(tistory)</h5>
-                    <span class="h2 font-weight-bold mb-0">49,65%</span>
+                    <span class="h2 font-weight-bold mb-0">%</span>
                     </div>
                     <div class="col-auto">
                     <div class="icon icon-shape bg-info text-white rounded-circle shadow">
@@ -107,7 +107,7 @@
         {% for sub in subject %}
         <!-- One Card -->
             <div class="col-xl-3 col-lg-6 plan_card">
-            <div class="card card-stats mb-4 mb-xl-0">
+            <div class="card card-stats mb-4 mb-xl-0 plan_card_content">
                 <div class="card-body">
                 <div class="row">
                     <div class="col">
@@ -129,6 +129,29 @@
             </div>
         {% endfor %}
 
+        <script>
+        function onclicked(){
+            document.getElementById('modal-button').click();
+        }
+        </script>
+
+        <!-- One Card -->
+            <div class="col-xl-3 col-lg-6 plan_card">
+            <div class="card card-stats mb-4 mb-xl-0 plan_card_content">
+                <div class="card-body" style="height:100%" onclick="onclicked()">
+                    <div class="card pt-3 pb-3 mb-1 bg-gradient-gray" style="rgba(220,220,220,0.2)">
+                        <div class="icon icon-shape bg-gray text-white rounded-circle shadow mx-auto"
+                            style="display:block">
+                            <i class="ni ni-fat-add" style="font-size:1.5rem"> </i>
+                        </div>
+                        <p class="text-center text-white text-sm">
+                            Create Subjects & Portfolio
+                        </p>
+                    </div>
+                </div>
+            </div>
+            </div>
+
         </div>
         </div>
     </div>
@@ -142,22 +165,90 @@
             <div class="card shadow">
             <div class="row">
                 <div class="col-md-10"> 
-                    <div class="card-header bg-transparent">
-                        <h3 class="mb-0"> 공부 기록/자료 추가하기 </h3>
-                        <h6 class="heading-small text-muted mb-4">Add to Study record/reference</h6>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-header bg-transparent">
+                                <h3 class="mb-0"> 공부 기록/자료 추가하기 </h3>
+                                <h6 class="heading-small text-muted mb-4">Add to Study record/reference</h6>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-2">
                 </div>
             </div>
+
             <div class="card-body">
-                <form method="POST" action="" >
+                <div class="pl-lg-4 mb-3">
+                    <div class="col-md-4">
+                            <button type="button" id="modal-button" style="display:none" class="" data-toggle="modal" data-target="#modal-form">Form</button>
+                            <div class="modal fade" id="modal-form" tabindex="-1" role="dialog" aria-labelledby="modal-form" aria-hidden="true" style="display: none;">
+                                <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-body p-0">
+                                        <div class="card bg-secondary shadow border-0">
+                                            <div class="card-header bg-transparent pb-5">
+                                                <div class="text-muted text-center mt-2 mb-3"><small>과목, 포트폴리오 추가하기</small></div>
+                                                <hr>
+                                                <div class="btn-wrapper text-center mb-3">
+                                                    <a href="{% url 'profile' %'}" class="btn btn-neutral btn-icon">
+                                                        <span class="btn-inner--icon"><img src="{% static 'assets/img/icons/common/github.svg' %}"></span>
+                                                        <span class="btn-inner--text">{{ user.username }}</span>
+                                                    </a>
+                                                </div>
+
+                                                <form role="form">
+                                                    <div class="form-group mb-3 focused">
+                                                        <div class="input-group input-group-alternative">
+                                                            <input class="form-control" placeholder="titles" type="text" name="title">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group mb-3 focused">
+                                                        <div class="input-group input-group-alternative">
+                                                            <input class="form-control" placeholder="sub" type="text" name="sub">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group focused">
+                                                        <div class="input-group input-group-alternative">
+                                                            <input class="form-control" placeholder="description" type="text" name="description" style="height:150px">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group focused">
+                                                        <div class="input-group input-group-alternative">
+                                                            <div class="form-group w-100">
+                                                                <select class="form-control" id="exampleFormControlSelect1" name="category" placeholder="category">
+                                                                    <option>Study</option>
+                                                                    <option>Develop</option>
+                                                                    <option>Blog</option>
+                                                                    <option>Receive License</option>
+                                                                    <option>Workout</option>
+                                                                    <option>Activity</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="text-center">
+                                                        <button type="button" class="btn btn-primary my-4">생성 하기</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>                                        
+                                    </div>      
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+                
+                <form method="GET" action="{% url 'create' %}">
                 <div class="pl-lg-4">
                     <div class="row">
                     <div class="col-md-12">
                         <div class="form-group">
                         <label class="form-control-label" for="input-address">제목</label>
-                        <input id="" class="form-control form-control-alternative" placeholder="" value="" type="text">
+                        <input name="p_title" id="" class="form-control form-control-alternative" placeholder="" value="" type="text">
                         </div>
                     </div>
                     </div>
@@ -166,19 +257,33 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                         <label class="form-control-label" for="input-city">링크1</label>
-                        <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="https://example.com" value="">
+                        <input name="link1" type="text" id="input-city" class="form-control form-control-alternative" placeholder="https://example.com" value="">
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                         <label class="form-control-label" for="input-country">링크2</label>
-                        <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="https://example.com" value="">
+                        <input name="link2" type="text" id="input-country" class="form-control form-control-alternative" placeholder="https://example.com" value="">
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-2">
+                        <label class="form-control-label" for="input-country"> 카테고리 </label>
+                        <br>
                         <div class="form-group">
-                        <label class="form-control-label" for="input-country">링크3</label>
-                        <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="https://example.com" value="">
+                            <select class="form-control" id="exampleFormControlSelect1" name="category">
+                                <option>Study</option>
+                                <option>Develop</option>
+                                <option>Blog</option>
+                                <option>Receive License</option>
+                                <option>Workout</option>
+                                <option>Activity</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-lg-2">
+                        <label class="form-control-label" for="input-country"> 태그 </label>
+                        <div class="input-group-prepend" style="width:90%">
+                            <input name="tag" type="text" id="input-city" class="form-control form-control-alternative" placeholder="# tag" value="">
                         </div>
                     </div>
                     </div>
@@ -186,7 +291,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                         <label class="form-control-label" for="input-country">첨부 파일</label>
-                        <input type="file" id="input-file" class="form-control-file">
+                        <input name="file" type="file" id="input-file" class="form-control-file">
                         </div>
                     </div>
                     </div>
@@ -195,7 +300,7 @@
                 <h6 class="heading-small text-muted mb-4"> </h6>
                 <div class="pl-lg-4">
                     <div class="form-group">
-                    <textarea rows="16" class="form-control form-control-alternative" placeholder=""></textarea>
+                    <textarea rows="16" name="contents" class="form-control form-control-alternative" placeholder=""></textarea>
                     </div>
                 </div>
                 <hr class="my-4" />
