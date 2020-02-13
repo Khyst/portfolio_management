@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-lg-7">
       {% if user.is_authenticated %}
-        <h1 class="display-2 text-white"> {{ user.usename }} </h1>
+        <h1 class="display-2 text-white"> {{ user.username }} </h1>
         <p class="text-white mt-0 mb-5"> I'm studying in KUSE Likelion 7th, and majoring in Computer Software Convergence </p>
         <a href="#!" class="btn btn-info">프로필 수정</a>
       {% else %}
@@ -67,19 +67,28 @@
           </div>
           <div class="text-center">
             <h3>
-              김용훈<span class="font-weight-light">, 27</span>
+              <span class="font-weight-light">{{ user.username }}, 22</span>
             </h3>
+
             <div class="h5 font-weight-300">
-              <i class="ni location_pin mr-2"></i> 주소 정보 (충청남도 청양군 청산로 35)
+              <i class="ni location_pin mr-2"></i> 주소 정보 (충청남도 청양군 청산로 35) {% comment %} {{ user.address }} {% endcomment %}
             </div>
             <div class="h5 mt-4">
-              <i class="ni business_briefcase-24 mr-2"></i> 대학교 학부생 - 1학년 재학
+              <i class="ni business_briefcase-24 mr-2"></i> 대학교 학부생 - 1학년 재학 {% comment %} {{ user.desc }} {% endcomment %}
             </div>
             <div>
               {% comment %} <i class="ni education_hat mr-2"></i> 고려 대학교, <br> 컴퓨터 소프트웨어 학과 <br> 과학기술대학 {% endcomment %}
             </div>
+
             <hr class="my-4" />
-            <p> 추가 정보 </p>
+
+            {% comment %} {% for history in user.history %}
+            <p class="text-sm"> {{ history }} </p>
+            {% endfor %} {% endcomment %}
+            
+            <p class="text-sm"> 청양중학교, 3학년 졸업 </p>
+            <p class="text-sm"> 한국디지털미디어고등학교, 해킹방어과 3학년 졸업 </p>
+            <p class="text-sm"> 한국정보올림피아드(Korea Olympiad of Information) 2nd prize </p>
             <a href="#"> 더 자세한 정보 </a>
           </div>
         </div>
@@ -105,13 +114,13 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-username">이름</label>
-                    <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="lucky.jesse">
+                    <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="{{ user.username }}">
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-email">이메일 주소</label>
-                    <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="jesse@example.com">
+                    <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="abcde@naver.com" value="{{ user.email }}">
                   </div>
                 </div>
               </div>
@@ -119,13 +128,13 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-first-name">이름</label>
-                    <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="Lucky">
+                    <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="{{ user.first_name }}">
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-last-name">성</label>
-                    <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="Jesse">
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="{{ user.last_name }}">
                   </div>
                 </div>
               </div>
