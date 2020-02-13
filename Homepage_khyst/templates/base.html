@@ -230,9 +230,12 @@
             </div>
           </li>
         </ul>
+
         {% else %}
-        <a class="nav-item nav-link" style="color:white" href="{% url 'signup' %}">Signup</a>
-        <a class="nav-item nav-link" style="color:white" href="{% url 'login' %}">Login</a>
+        <ul class=" d-none d-md-flex">
+          <a class="nav-item nav-link" style="color:white" href="{% url 'signup' %}">Signup</a>
+          <a class="nav-item nav-link" style="color:white" href="{% url 'login' %}">Login</a>
+        </ul>
         {% endif %}
 
       </div>

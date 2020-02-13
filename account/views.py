@@ -4,7 +4,6 @@ from django.contrib import auth
 
 # Create your views here.
 def login(request):
-
     if request.method == 'POST': #POST 요청
         username = request.POST['username']
         password = request.POST['password']
@@ -48,4 +47,16 @@ def logout(request):
 def profile(request):
     return render(request, 'profile.html')
 
+from django.contrib.auth.models import User
+
+class Person(User):  
+    objects = User.objects.all()
+
+    class Meta:
+        proxy = True
+        ordering = ('-username',)
+
+    def do_print(self):
+        for username in self.objects:
+            print("Hello! " + username.__str__())
 

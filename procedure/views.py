@@ -11,7 +11,6 @@ def schedule(request):
     return render(request, 'schedule.html')
     
 def create(request):
-
     if request.user.is_authenticated:
         subject = Subject.objects.filter(author = request.user)
         ref = Posting.objects.filter(author = request.user)
