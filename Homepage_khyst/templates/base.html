@@ -8,7 +8,7 @@
     Portfolio Management
   </title>
   <!-- Favicon -->
-  <link href="{% static 'assets/img/brand/favicon.png' %}" rel="icon" type="image/png">
+  {% comment %} <link href="{% static 'assets/img/brand/favicon.png' %}" rel="icon" type="image/png"> {% endcomment %}
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Icons -->
@@ -33,8 +33,9 @@
         <div class="navbar-collapse-header d-md-none">
           <div class="row">
             <div class="col-6 collapse-brand">
-              <a href="index.html">
-                <img src="{% static 'assets/img/brand/blue.png' %}">
+              <a href="{% url 'dashboard' %}">
+                <h3> Management </h3>
+                {% comment %} <img src="{% static 'assets/img/brand/blue.png' %}"> {% endcomment %}
               </a>
             </div>
             <div class="col-6 collapse-close">
@@ -61,8 +62,7 @@
         <!-- Navigation -->
         
         <!-- Heading -->
-        <h3 class="text-muted"> Portfolio / Plan </h3>
-
+        <h3 class="text-muted"> Management </h3>
         <!-- Divider -->
         <hr class="my-3">
 
@@ -115,27 +115,27 @@
         <ul class="navbar-nav mb-md-3">
 
           <li class="nav-item">
-            <a class="nav-link" href=""> <i class="ni ni-world-2"> </i> KOCW </a>
+            <a class="nav-link" href="http://kocw.net"> <i class="ni ni-world-2"> </i> KOCW </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href=""> <i class="ni ni-world-2"> </i> Portal </a>
+            <a class="nav-link" href="http://portal.korea.ac.kr"> <i class="ni ni-world-2"> </i> Portal </a>
           </li>
           
           <li class="nav-item">
-            <a class="nav-link" href=""> <i class="ni ni-world-2"> </i> sPortal </a>
+            <a class="nav-link" href="http://sportal.korea.ac.kr"> <i class="ni ni-world-2"> </i> sPortal </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href=""> <i class="ni ni-badge"> </i> edwith </a>
+            <a class="nav-link" href="http://edwith.org"> <i class="ni ni-badge"> </i> edwith </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href=""> <i class="ni ni-badge"> </i> LikeLion </a>
+            <a class="nav-link" href="#"> <i class="ni ni-badge"> </i> LikeLion </a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href=""> <i class="ni ni-books"> </i> Library </a>
+            <a class="nav-link" href="#"> <i class="ni ni-books"> </i> Library </a>
           </li>
 
         </ul>

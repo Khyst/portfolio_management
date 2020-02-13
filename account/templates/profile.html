@@ -8,17 +8,26 @@
   <!-- Header container -->
   <div class="container-fluid d-flex align-items-center">
     <div class="row">
-      <div class="col-lg-7 col-md-10">
-        <h1 class="display-2 text-white">Khyst</h1>
-        <p class="text-white mt-0 mb-5">  간단한 소개..간단한 소개..간단한 소개..간단한 소개..간단한 소개..간단한 소개..간단한 소개.. </p>
+      <div class="col-lg-7">
+      {% if user.is_authenticated %}
+        <h1 class="display-2 text-white"> {{ user.usename }} </h1>
+        <p class="text-white mt-0 mb-5"> I'm studying in KUSE Likelion 7th, and majoring in Computer Software Convergence </p>
         <a href="#!" class="btn btn-info">프로필 수정</a>
+      {% else %}
+        <h1 class="display-2 text-white"> Khyst </h1>
+        <p class="text-white mt-0 mb-5"> 로그인을 해야, 프로필 정보를 볼수 있어요. (현재 페이지: Default 프로필 페이지) </p>
+        <a href="#!" class="btn btn-info">프로필 수정</a>
+      {% endif %}
       </div>
     </div>
   </div>
 </div>
 
+
 <!-- Page content -->
 <div class="container-fluid mt--7">
+  {% if user.is_authenticated %}
+
   <div class="row">
     <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
       <div class="card card-profile shadow">
@@ -168,5 +177,160 @@
       </div>
     </div>
   </div>
+
+  {% else %}
+
+  <div class="row">
+    <h2> 로그인된 유저 정보가 존재하지 않습니다. (Default 프로필) </h2>
+    <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+      <div class="card card-profile shadow">
+        <div class="row justify-content-center">
+          <div class="col-lg-3 order-lg-2">
+            <div class="card-profile-image">
+              <a href="#">
+                <img src="{% static 'assets/img/theme/team-1-800x800.jpeg' %}" class="rounded-circle">
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+          <div class="d-flex justify-content-between">
+            <a href="#" class="btn btn-sm btn-info mr-4">연락</a>
+            <a href="#" class="btn btn-sm btn-default float-right">메세지</a>
+          </div>
+        </div>
+        <div class="card-body pt-0 pt-md-4">
+          <div class="row">
+            <div class="col">
+              <div class="card-profile-stats d-flex justify-content-center mt-md-5">
+                <div>
+                  <span class="heading">22</span>
+                  <span class="description">Subjects</span>
+                </div>
+                <div>
+                  <span class="heading">10</span>
+                  <span class="description">Portfolios</span>
+                </div>
+                <div>
+                  <span class="heading">89</span>
+                  <span class="description">Comments</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <h3>
+              김용훈<span class="font-weight-light">, 27</span>
+            </h3>
+            <div class="h5 font-weight-300">
+              <i class="ni location_pin mr-2"></i> 주소 정보 (충청남도 청양군 청산로 35)
+            </div>
+            <div class="h5 mt-4">
+              <i class="ni business_briefcase-24 mr-2"></i> 대학교 학부생 - 1학년 재학
+            </div>
+            <div>
+              {% comment %} <i class="ni education_hat mr-2"></i> 고려 대학교, <br> 컴퓨터 소프트웨어 학과 <br> 과학기술대학 {% endcomment %}
+            </div>
+            <hr class="my-4" />
+            <p> 추가 정보 </p>
+            <a href="#"> 더 자세한 정보 </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">내 정보</h3>
+            </div>
+            <div class="col-4 text-right">
+              <a href="#!" class="btn btn-sm btn-primary">설정</a>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form>
+            <h6 class="heading-small text-muted mb-4">사용자 정보</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-username">이름</label>
+                    <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="lucky.jesse">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-email">이메일 주소</label>
+                    <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="jesse@example.com">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-first-name">이름</label>
+                    <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="Lucky">
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-last-name">성</label>
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="Jesse">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Address -->
+            <h6 class="heading-small text-muted mb-4">연락처</h6>
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-address">주소</label>
+                    <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="세종특별자치시 세종로 2511 고려대학교 세종캠퍼스 과학기술관1" type="text">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-city">도/특별/광역시</label>
+                    <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="충청남도">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-country">시/군/구</label>
+                    <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Country" value="청양군">
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-country">우편 번호</label>
+                    <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="33336">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Description -->
+            <h6 class="heading-small text-muted mb-4">자세한 정보</h6>
+            <div class="pl-lg-4">
+              <div class="form-group">
+                <label>자세한 정보</label>
+                <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..."> Details Information... Details Information... Details Information... Details Information... </textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endif %}
   {% endblock %}
 </div>

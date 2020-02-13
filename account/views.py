@@ -49,14 +49,3 @@ def profile(request):
 
 from django.contrib.auth.models import User
 
-class Person(User):  
-    objects = User.objects.all()
-
-    class Meta:
-        proxy = True
-        ordering = ('-username',)
-
-    def do_print(self):
-        for username in self.objects:
-            print("Hello! " + username.__str__())
-
