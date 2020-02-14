@@ -42,8 +42,6 @@
         </div>
         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
           <div class="d-flex justify-content-between">
-            <a href="#" class="btn btn-sm btn-info mr-4">연락</a>
-            <a href="#" class="btn btn-sm btn-default float-right">메세지</a>
           </div>
         </div>
         <div class="card-body pt-0 pt-md-4">
@@ -71,10 +69,10 @@
             </h3>
 
             <div class="h5 font-weight-300">
-              <i class="ni location_pin mr-2"></i> 주소 정보 (충청남도 청양군 청산로 35) {% comment %} {{ user.address }} {% endcomment %}
+              <i class="ni location_pin mr-2"></i> {{ user.address }}
             </div>
             <div class="h5 mt-4">
-              <i class="ni business_briefcase-24 mr-2"></i> 대학교 학부생 - 1학년 재학 {% comment %} {{ user.desc }} {% endcomment %}
+              <i class="ni business_briefcase-24 mr-2"></i> 대학교 학부생 - 1학년 재학
             </div>
             <div>
               {% comment %} <i class="ni education_hat mr-2"></i> 고려 대학교, <br> 컴퓨터 소프트웨어 학과 <br> 과학기술대학 {% endcomment %}
@@ -208,8 +206,6 @@
         </div>
         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
           <div class="d-flex justify-content-between">
-            <a href="#" class="btn btn-sm btn-info mr-4">연락</a>
-            <a href="#" class="btn btn-sm btn-default float-right">메세지</a>
           </div>
         </div>
         <div class="card-body pt-0 pt-md-4">
@@ -230,22 +226,26 @@
                 </div>
               </div>
             </div>
+            
           </div>
           <div class="text-center">
             <h3>
-              김용훈<span class="font-weight-light">, 27</span>
+              김용훈<span class="font-weight-light">, 22</span>
             </h3>
             <div class="h5 font-weight-300">
-              <i class="ni location_pin mr-2"></i> 주소 정보 (충청남도 청양군 청산로 35)
+              <i class="ni location_pin mr-2"></i> 충청남도 청양군 출신
             </div>
             <div class="h5 mt-4">
               <i class="ni business_briefcase-24 mr-2"></i> 대학교 학부생 - 1학년 재학
             </div>
             <div>
               {% comment %} <i class="ni education_hat mr-2"></i> 고려 대학교, <br> 컴퓨터 소프트웨어 학과 <br> 과학기술대학 {% endcomment %}
+              
             </div>
             <hr class="my-4" />
-            <p> 추가 정보 </p>
+            <p class="text-sm"> 청양중학교, 3학년 졸업 </p>
+            <p class="text-sm"> 한국디지털미디어고등학교, 해킹방어과 3학년 졸업 </p>
+            <p class="text-sm"> 한국정보올림피아드(Korea Olympiad of Information) 2nd prize </p>
             <a href="#"> 더 자세한 정보 </a>
           </div>
         </div>
@@ -271,13 +271,13 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-username">이름</label>
-                    <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="lucky.jesse">
+                    <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="khyst" readonly>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-email">이메일 주소</label>
-                    <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="jesse@example.com">
+                    <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="khyst@example.com" readonly>
                   </div>
                 </div>
               </div>
@@ -285,13 +285,13 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-first-name">이름</label>
-                    <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="Lucky">
+                    <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="Lion" readonly>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-last-name">성</label>
-                    <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="Jesse">
+                    <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="Kim" readonly>
                   </div>
                 </div>
               </div>
@@ -304,7 +304,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="form-control-label" for="input-address">주소</label>
-                    <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="세종특별자치시 세종로 2511 고려대학교 세종캠퍼스 과학기술관1" type="text">
+                    <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="세종특별자치시 세종로 2511 고려대학교 세종캠퍼스 과학기술관2" type="text" readonly>
                   </div>
                 </div>
               </div>
@@ -312,19 +312,19 @@
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-city">도/특별/광역시</label>
-                    <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="충청남도">
+                    <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="세종특별자치시" readonly>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-country">시/군/구</label>
-                    <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Country" value="청양군">
+                    <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Country" value="조치원읍" readonly>
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-country">우편 번호</label>
-                    <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="33336">
+                    <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="Postcode" readonly>
                   </div>
                 </div>
               </div>
@@ -335,7 +335,7 @@
             <div class="pl-lg-4">
               <div class="form-group">
                 <label>자세한 정보</label>
-                <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..."> Details Information... Details Information... Details Information... Details Information... </textarea>
+                <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..." readonly> 로그인을 해야 사용자 정보를 변경/확인할수 있어요!! ( 초기 페이지 ) </textarea>
               </div>
             </div>
           </form>
