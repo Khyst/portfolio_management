@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import auth
+from django.contrib.auth.forms import UserChangeForm
 
 # Create your views here.
 def login(request):
@@ -45,7 +46,20 @@ def logout(request):
     return render(request, 'signup.html')
 
 def profile(request):
+    if request.method == 'POST':
+        user_obj = request.user
+
+        """
+        user_obj.username = request.POST.get('username')
+        user_obj.email = request.POST.get('email')
+        user_obj.first_name = request.POST['first_name']
+        user_obj.last_name = request.POST.get('last_name')"""
+
+        user_obj.statue = request.POST['statue']
+        user_obj.county = request.POST['county']
+        user_obj.postcode = request.POST['postcode']
+        user_obj.address = request.POST['address']
+
+        user_obj.save()
+
     return render(request, 'profile.html')
-
-from django.contrib.auth.models import User
-

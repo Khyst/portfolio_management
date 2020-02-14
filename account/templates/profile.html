@@ -102,25 +102,29 @@
               <h3 class="mb-0">내 정보</h3>
             </div>
             <div class="col-4 text-right">
-              <a href="#!" class="btn btn-sm btn-primary">설정</a>
+              <!-- a의 href속성이 아닌 javascript onclick을 사용하기 위한 : javascript:void(0) 구문 -->
+              <a href="javascript:void(0)" class="btn btn-sm btn-primary" onclick="document.getElementById('revise_account_info').click();">변경</a>
             </div>
           </div>
         </div>
         <div class="card-body">
-          <form>
+          <form action="{% url 'profile' %}" method=POST >
+          {% csrf_token %}
+            <input type="submit" style="display:none" id="revise_account_info"class="btn btn-primary mt-4" value="Submit">
+
             <h6 class="heading-small text-muted mb-4">사용자 정보</h6>
             <div class="pl-lg-4">
               <div class="row">
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-username">이름</label>
-                    <input type="text" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="{{ user.username }}">
+                    <input type="text" name="username" id="input-username" class="form-control form-control-alternative" placeholder="Username" value="{{ user.username }}" readonly>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-email">이메일 주소</label>
-                    <input type="email" id="input-email" class="form-control form-control-alternative" placeholder="abcde@naver.com" value="{{ user.email }}">
+                    <input type="email" email="email" id="input-email" class="form-control form-control-alternative" placeholder="abcde@naver.com" value="{{ user.email }}" readonly>
                   </div>
                 </div>
               </div>
@@ -128,13 +132,13 @@
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-first-name">이름</label>
-                    <input type="text" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="{{ user.first_name }}">
+                    <input type="text" name="first_name" id="input-first-name" class="form-control form-control-alternative" placeholder="First name" value="{{ user.first_name }}" readonly>
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="form-group">
                     <label class="form-control-label" for="input-last-name">성</label>
-                    <input type="text" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="{{ user.last_name }}">
+                    <input type="text" name="Last_name" id="input-last-name" class="form-control form-control-alternative" placeholder="Last name" value="{{ user.last_name }}" readonly>
                   </div>
                 </div>
               </div>
@@ -147,7 +151,7 @@
                 <div class="col-md-12">
                   <div class="form-group">
                     <label class="form-control-label" for="input-address">주소</label>
-                    <input id="input-address" class="form-control form-control-alternative" placeholder="Home Address" value="세종특별자치시 세종로 2511 고려대학교 세종캠퍼스 과학기술관1" type="text">
+                    <input id="input-address" name="address" class="form-control form-control-alternative" placeholder="Home Address" value="{{ user.address }}" type="text">
                   </div>
                 </div>
               </div>
@@ -155,19 +159,19 @@
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-city">도/특별/광역시</label>
-                    <input type="text" id="input-city" class="form-control form-control-alternative" placeholder="City" value="충청남도">
+                    <input type="text" id="input-city" name="statue" class="form-control form-control-alternative" placeholder="City" value="{{ user.statue }}">
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-country">시/군/구</label>
-                    <input type="text" id="input-country" class="form-control form-control-alternative" placeholder="Country" value="청양군">
+                    <input type="text" id="input-country" name="county" class="form-control form-control-alternative" placeholder="Country" value="{{ user.county }}">
                   </div>
                 </div>
                 <div class="col-lg-4">
                   <div class="form-group">
                     <label class="form-control-label" for="input-country">우편 번호</label>
-                    <input type="number" id="input-postal-code" class="form-control form-control-alternative" placeholder="33336">
+                    <input type="number" id="input-postal-code" name="postcode" class="form-control form-control-alternative" placeholder="{{ user.postcode }}">
                   </div>
                 </div>
               </div>
@@ -178,7 +182,7 @@
             <div class="pl-lg-4">
               <div class="form-group">
                 <label>자세한 정보</label>
-                <textarea rows="4" class="form-control form-control-alternative" placeholder="A few words about you ..."> Details Information... Details Information... Details Information... Details Information... </textarea>
+                <textarea rows="4" name="detail" class="form-control form-control-alternative" placeholder="A few words about you ..."> {{ user.detail }} </textarea>
               </div>
             </div>
           </form>
