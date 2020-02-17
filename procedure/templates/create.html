@@ -104,7 +104,7 @@
             </div>
             </div>
 
-        {% for sub in subject %}
+        {% for sub in subject_post %}
         <!-- One Card -->
             <div class="col-xl-3 col-lg-6 plan_card">
             <div class="card card-stats mb-4 mb-xl-0 plan_card_content">
@@ -192,12 +192,13 @@
                                                 <hr>
                                                 <div class="btn-wrapper text-center mb-3">
                                                     <a href="{% url 'profile' %'}" class="btn btn-neutral btn-icon">
-                                                        <span class="btn-inner--icon"><img src="{% static 'assets/img/icons/common/github.svg' %}"></span>
+                                                        <span class="btn-inner--icon"><i class="ni ni-circle-08"></i></span>
                                                         <span class="btn-inner--text">{{ user.username }}</span>
                                                     </a>
                                                 </div>
 
-                                                <form role="form">
+                                                <form role="form" action="{% url 'sub_create' %}" method="POST">
+                                                {% csrf_token %}
                                                     <div class="form-group mb-3 focused">
                                                         <div class="input-group input-group-alternative">
                                                             <input class="form-control" placeholder="titles" type="text" name="title">
@@ -205,12 +206,12 @@
                                                     </div>
                                                     <div class="form-group mb-3 focused">
                                                         <div class="input-group input-group-alternative">
-                                                            <input class="form-control" placeholder="sub" type="text" name="sub">
+                                                            <input class="form-control" placeholder="sub-title" type="text" name="sub">
                                                         </div>
                                                     </div>
                                                     <div class="form-group focused">
                                                         <div class="input-group input-group-alternative">
-                                                            <input class="form-control" placeholder="description" type="text" name="description" style="height:150px">
+                                                            <input class="form-control" placeholder="Description" type="text" style="height:150px" name="desc">
                                                         </div>
                                                     </div>
 
@@ -218,19 +219,19 @@
                                                         <div class="input-group input-group-alternative">
                                                             <div class="form-group w-100">
                                                                 <select class="form-control" id="exampleFormControlSelect1" name="category" placeholder="category">
-                                                                    <option>Study</option>
-                                                                    <option>Develop</option>
-                                                                    <option>Blog</option>
-                                                                    <option>Receive License</option>
-                                                                    <option>Workout</option>
-                                                                    <option>Activity</option>
+                                                                    <option value=1>Study</option>
+                                                                    <option value=2>Develop</option>
+                                                                    <option value=3>Blog</option>
+                                                                    <option value=4>Receive License</option>
+                                                                    <option value=5>Workout</option>
+                                                                    <option value=6>Activity</option>
                                                                 </select>
                                                             </div>
                                                         </div>
                                                     </div>
 
                                                     <div class="text-center">
-                                                        <button type="button" class="btn btn-primary my-4">생성 하기</button>
+                                                        <button type="submit" class="btn btn-primary my-4">생성 하기</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -242,7 +243,7 @@
                         </div>
                 </div>
                 
-                <form method="GET" action="{% url 'create' %}">
+                <form method="GET" action="{% url 'post_create' %}">
                 <div class="pl-lg-4">
                     <div class="row">
                     <div class="col-md-12">
@@ -271,12 +272,9 @@
                         <br>
                         <div class="form-group">
                             <select class="form-control" id="exampleFormControlSelect1" name="category">
-                                <option>Study</option>
-                                <option>Develop</option>
-                                <option>Blog</option>
-                                <option>Receive License</option>
-                                <option>Workout</option>
-                                <option>Activity</option>
+                            {% for sub in subject %}
+                                <option value="{{ sub.post_obj_id }}"> {{ sub.post_obj_id }} </option>
+                            {% endfor %}
                             </select>
                         </div>
                     </div>
@@ -300,12 +298,18 @@
                 <h6 class="heading-small text-muted mb-4"> </h6>
                 <div class="pl-lg-4">
                     <div class="form-group">
+                    {% if request.user.is_authenticated %}
                     <textarea rows="16" name="contents" class="form-control form-control-alternative" placeholder=""></textarea>
+                    {% else %}
+                    <textarea rows="16" name="contents" class="form-control form-control-alternative" placeholder="" readonly> 로그인을 해야 작성할 수 있어요!!  </textarea>
+                    {% endif %}
                     </div>
                 </div>
                 <hr class="my-4" />
                 <!-- Description -->
-                <button class="btn btn-icon btn-2 btn-success" type="button">
+
+                {% if request.user.is_authenticated %}
+                <button class="btn btn-icon btn-2 btn-success"  type="submit">
                     작성하기
                     {% comment %} <span class="btn-inner--icon"><i class="ni ni-atom"></i></span> {% endcomment %}
                 </button>
@@ -313,6 +317,7 @@
                     임시저장
                     {% comment %} <span class="btn-inner--icon"><i class="ni ni-atom"></i></span> {% endcomment %}
                 </button>
+                {% endif %}
                 </form>
             </div>
             </div>

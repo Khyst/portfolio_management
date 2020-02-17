@@ -1,44 +1,32 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save  
-from django.dispatch import receiver
 from django.conf import settings
 
+"""
+                    << 모든 DB 초기화 >>
+
+find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+"""
 
 class Subject(models.Model):
-
-    #author = models.OneToOneField(User, on_delete=models.CASCADE)
-    #author은 User과 subject를 1:N 구조로 이어주는 Key
-
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default="") # User accout와 연결
     title = models.CharField(max_length=100)
-    procedure = models.IntegerField()
+    procedure = models.IntegerField(default=0)
 
-    # 초기에 Subject작성시 NULL인 상태로 생성
     this_week_proceed = models.IntegerField(null=True)
     last_study = models.DateTimeField(null=True)
     time = models.IntegerField(null=True)
 
     category = models.IntegerField(default=0)
 
-    def __str__(self):
-        return self.title
-
 class Posting(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, default="")
-    post_obj = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    #obj는 Subject과 Posting를 1:다 구조로 이어주는 Key
+    post_obj = models.ForeignKey(Subject, on_delete=models.CASCADE, default="")
 
-    post_id = models.IntegerField(default=0)
     post_title = models.CharField(default="", max_length=200)
-
     reference = models.TextField()
     description = models.TextField()
-
-    intro_image = models.ImageField()
-
-    def __str__(self):
-        return self.post_title
+    intro_image = models.ImageField(null=True)
 
 class timeAmount(models.Model):
     totalWeeklyAmount = models.IntegerField()
@@ -61,4 +49,3 @@ class schedule(models.Model):
 
     def __str__(self):
         return self.title
-

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from .models import MyUser
 from django.contrib import auth
 from django.contrib.auth.forms import UserChangeForm
 
@@ -27,10 +28,10 @@ def signup(request):
     if request.method == 'POST':
         if request.POST['password1'] == request.POST['password2']:
             try:
-                user = User.objects.get(username=request.POST['username'])
+                user = MyUser.objects.get(username=request.POST['username'])
                 return render(request, 'signup.html', {'error' : '!! 사용자가 이미 존재 합니다. !!'})
-            except User.DoesNotExist:
-                user = User.objects.create_user(
+            except MyUser.DoesNotExist:
+                user = MyUser.objects.create_user(
                     request.POST['username'], request.POST['email'], request.POST['password1']
                 )
                 auth.login(request, user)
@@ -53,7 +54,8 @@ def profile(request):
         user_obj.username = request.POST.get('username')
         user_obj.email = request.POST.get('email')
         user_obj.first_name = request.POST['first_name']
-        user_obj.last_name = request.POST.get('last_name')"""
+        user_obj.last_name = request.POST.get('last_name')
+        """
 
         user_obj.statue = request.POST['statue']
         user_obj.county = request.POST['county']

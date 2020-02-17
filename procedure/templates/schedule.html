@@ -277,7 +277,7 @@
         <!-- Navigation -->
         
         <!-- Heading -->
-        <h3 class="text-muted"> Portfolio / Plan </h3>
+        <h3 class="text-muted"> Management </h3>
 
         <!-- Divider -->
         <hr class="my-3">
@@ -308,7 +308,7 @@
               <i class="ni ni-bullet-list-67 text-red"></i> 일정 리스트
             </a>
           </li>
-
+          {% if not user.is_authenticated %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'login' %}">
               <i class="ni ni-key-25 text-info"></i> 로그인
@@ -320,6 +320,9 @@
               <i class="ni ni-circle-08 text-pink"></i> 회원가입
             </a>
           </li>
+          {% else %}
+          
+          {% endif %}
 
         </ul>
 
